@@ -38,10 +38,12 @@
             --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
             
             --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            --user-font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+            font-family: var(--user-font);
             background: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
@@ -136,6 +138,32 @@
         .nav-link:hover::after,
         .nav-link.active::after {
             width: 100%;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .settings-btn, .profile-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .settings-btn:hover, .profile-btn:hover {
+            background: var(--bg-elevated);
+            border-color: var(--accent-blue);
         }
 
         .login-btn {
@@ -627,6 +655,14 @@
             align-items: center;
             justify-content: center;
             font-size: 20px;
+            object-fit: cover;
+        }
+
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
         }
 
         .rating-stars-display {
@@ -935,6 +971,8 @@
             border: 1px solid var(--border-color);
             animation: slideDown 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         .close-modal {
@@ -966,6 +1004,232 @@
             margin-bottom: 36px;
             font-size: 32px;
             font-weight: 700;
+        }
+
+        .modal-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+            background: var(--bg-elevated);
+            padding: 6px;
+            border-radius: 14px;
+        }
+
+        .modal-tab {
+            flex: 1;
+            padding: 12px 20px;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: var(--transition-smooth);
+        }
+
+        .modal-tab.active {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .profile-photo-upload {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .profile-photo-preview {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            overflow: hidden;
+            border: 3px solid var(--border-color);
+        }
+
+        .profile-photo-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .upload-photo-btn {
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: var(--transition-smooth);
+        }
+
+        .upload-photo-btn:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--accent-blue);
+        }
+
+        /* ========== SETTINGS MODAL ========== */
+        .settings-section {
+            margin-bottom: 32px;
+        }
+
+        .settings-section h3 {
+            font-size: 20px;
+            margin-bottom: 16px;
+            color: var(--accent-blue);
+        }
+
+        .color-picker-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .color-option {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 12px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: var(--transition-smooth);
+            position: relative;
+        }
+
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+
+        .color-option.active {
+            border-color: white;
+            box-shadow: 0 0 20px currentColor;
+        }
+
+        .font-select {
+            width: 100%;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 14px 18px;
+            color: var(--text-primary);
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .font-select:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 4px rgba(10, 132, 255, 0.1);
+        }
+
+        /* ========== PROFILE MODAL ========== */
+        .profile-info {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .profile-avatar-large {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 64px;
+            border: 4px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .profile-avatar-large img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-name {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .profile-nickname {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .profile-email {
+            font-size: 15px;
+            color: var(--text-tertiary);
+            margin-bottom: 24px;
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 30px;
+        }
+
+        .profile-stat {
+            background: var(--bg-elevated);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .profile-stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--accent-blue);
+            display: block;
+        }
+
+        .profile-stat-label {
+            font-size: 14px;
+            color: var(--text-tertiary);
+            margin-top: 4px;
+        }
+
+        .logout-btn {
+            width: 100%;
+            background: var(--accent-red);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            margin-top: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .logout-btn:hover {
+            background: #e03d33;
+            transform: translateY(-2px);
         }
 
         /* ========== ALERT MESSAGES ========== */
@@ -1005,6 +1269,7 @@
             border: 1px solid var(--accent-blue);
         }
 
+        /* ========== ANIMATIONS ========== */
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -1043,6 +1308,15 @@
             }
         }
 
+        @keyframes rainbow {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        .rainbow-effect {
+            animation: rainbow 5s linear infinite;
+        }
+
         /* ========== RESPONSIVE DESIGN ========== */
         @media (max-width: 968px) {
             .nav-menu {
@@ -1075,6 +1349,10 @@
             .disasters-grid {
                 grid-template-columns: 1fr;
             }
+
+            .color-picker-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
 
         @media (max-width: 640px) {
@@ -1097,6 +1375,16 @@
 
             .credits-card {
                 padding: 40px 30px;
+            }
+
+            .nav-actions {
+                gap: 8px;
+            }
+
+            .settings-btn, .profile-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 18px;
             }
         }
 
@@ -1126,6 +1414,10 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--accent-blue);
         }
+
+        .hidden {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
@@ -1145,10 +1437,14 @@
                 <li><a href="#ratings" class="nav-link">Avaliações</a></li>
                 <li><a href="#credits" class="nav-link">Créditos</a></li>
             </ul>
-            <button class="login-btn" id="loginBtn">
-                <span>🔐</span>
-                <span>Entrar</span>
-            </button>
+            <div class="nav-actions">
+                <button class="settings-btn" id="settingsBtn" title="Configurações">⚙️</button>
+                <button class="profile-btn hidden" id="profileBtn" title="Perfil">👤</button>
+                <button class="login-btn" id="loginBtn">
+                    <span>🔐</span>
+                    <span>Entrar</span>
+                </button>
+            </div>
             <div class="hamburger" id="hamburger">
                 <span></span>
                 <span></span>
@@ -1186,11 +1482,6 @@
             </div>
             <h1 class="hero-title">Jornal de Desastres Ambientais</h1>
             <p class="hero-subtitle">Monitoramento em tempo real de eventos climáticos extremos e desastres naturais no Brasil e no mundo</p>
-        </div>
-        <div class="hero-background">
-            <div class="gradient-orb orb-1"></div>
-            <div class="gradient-orb orb-2"></div>
-            <div class="gradient-orb orb-3"></div>
         </div>
     </section>
 
@@ -1408,18 +1699,18 @@
                 <div class="video-wrapper">
                     <div class="video-placeholder" id="videoPlaceholder">
                         <div class="placeholder-icon">🎬</div>
-                        <p class="placeholder-text">Aguardando vídeo do administrador</p>
+                        <p style="color: var(--text-secondary); font-size: 18px;">Aguardando vídeo do administrador</p>
                     </div>
                     <iframe id="journalVideo" style="display: none;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
                 <div class="video-info">
                     <h3 class="video-title" id="videoTitle">Aguardando atualização...</h3>
-                    <p id="videoDescription" style="color: var(--text-secondary); margin-top: 16px; line-height: 1.8;">O administrador do sistema poderá adicionar vídeos informativos aqui. Apenas o email autorizado (kartywillytdc@gmail.com) tem permissão para modificar o conteúdo.</p>
+                    <p id="videoDescription" style="color: var(--text-secondary); margin-top: 16px; line-height: 1.8;">O administrador do sistema (kartywillytdc@gmail.com) poderá adicionar vídeos informativos aqui.</p>
                 </div>
             </div>
 
             <!-- Admin Panel -->
-            <div class="admin-panel" id="adminPanel" style="display: none;">
+            <div class="admin-panel hidden" id="adminPanel">
                 <div class="admin-header">
                     <div class="admin-icon">⚙️</div>
                     <h3>Painel Administrativo - Jornal</h3>
@@ -1464,7 +1755,7 @@
             </div>
 
             <!-- Admin Upload Panel -->
-            <div class="admin-panel" id="galleryAdminPanel" style="display: none;">
+            <div class="admin-panel hidden" id="galleryAdminPanel">
                 <div class="admin-header">
                     <div class="admin-icon">🖼️</div>
                     <h3>Painel Administrativo - Galeria</h3>
@@ -1545,13 +1836,6 @@
                     <form id="ratingForm">
                         <div class="form-group">
                             <label>
-                                <span>👤</span>
-                                <span>Seu Nome</span>
-                            </label>
-                            <input type="text" id="ratingName" placeholder="Digite seu nome" required>
-                        </div>
-                        <div class="form-group">
-                            <label>
                                 <span>💬</span>
                                 <span>Comentário</span>
                             </label>
@@ -1586,7 +1870,7 @@
             <div class="credits-card">
                 <div class="creator-avatar">👨‍💻</div>
                 <h3 class="creator-name">Karty Willy</h3>
-                <p class="creator-role">Desenvolvedor & Estudante</p>
+                <p class="creator-role">Estudante & Desenvolvedor do Projeto</p>
                 <p style="color: var(--text-secondary); font-size: 17px; line-height: 1.8; max-width: 700px; margin: 0 auto 30px;">
                     Este site foi desenvolvido como projeto educacional para a escola, com o objetivo de informar e conscientizar sobre desastres ambientais e a importância da preservação do meio ambiente.
                 </p>
@@ -1644,7 +1928,7 @@
                 <div class="parana-badge">
                     <h4 style="margin-bottom: 16px; font-size: 20px;">🏛️ Governo do Estado do Paraná</h4>
                     <p style="color: var(--text-secondary); margin-bottom: 20px;">Secretaria da Educação e do Esporte</p>
-                    <img src="https://i.ibb.co/pj32MCr9/Gemini-Generated-Image-24dk5s24dk5s24dk.png" alt="SEED Paraná" class="parana-logo" style="max-width: 250px; height: auto; display: block; margin: 0 auto; filter: brightness(1.5);">
+                    <img src="https://i.ibb.co/pj32MCr9/Gemini-Generated-Image-24dk5s24dk5s24dk.png" alt="SEED Paraná" class="parana-logo" id="paranaLogo">
                     <p style="color: var(--text-secondary); font-size: 14px; margin-top: 20px; line-height: 1.6;">
                         Este projeto é uma iniciativa educacional desenvolvida sob supervisão da SEED - Secretaria de Estado da Educação e do Esporte do Paraná, com foco em educação ambiental e tecnologia.
                     </p>
@@ -1658,7 +1942,7 @@
                         estudantes e a comunidade sobre a importância da preservação ambiental e da prevenção de desastres naturais. 
                         O projeto integra conhecimentos de programação, design, meio ambiente e responsabilidade social.
                     </p>
-                    </div>
+                </div>
 
                 <div style="margin-top: 30px; text-align: center;">
                     <p style="color: var(--text-tertiary); font-size: 14px;">
@@ -1707,37 +1991,174 @@
         </div>
     </footer>
 
-    <!-- Login Modal -->
-    <div class="modal" id="loginModal">
+    <!-- Login/Register Modal -->
+    <div class="modal" id="authModal">
         <div class="modal-content">
-            <span class="close-modal" id="closeModal">&times;</span>
-            <h2>🔐 Login Administrativo</h2>
-            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 30px;">
-                Acesso restrito ao administrador do sistema
-            </p>
-            <form id="loginForm">
-                <div class="form-group">
-                    <label>
-                        <span>📧</span>
-                        <span>E-mail</span>
-                    </label>
-                    <input type="email" id="loginEmail" placeholder="seu@email.com" required>
+            <span class="close-modal" id="closeAuthModal">&times;</span>
+            <h2>🔐 Autenticação</h2>
+            
+            <div class="modal-tabs">
+                <button class="modal-tab active" data-tab="login">Login</button>
+                <button class="modal-tab" data-tab="register">Registrar</button>
+            </div>
+
+            <!-- Login Tab -->
+            <div class="tab-content active" id="loginTab">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label>
+                            <span>📧</span>
+                            <span>E-mail</span>
+                        </label>
+                        <input type="email" id="loginEmail" placeholder="seu@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <span>🔑</span>
+                            <span>Senha</span>
+                        </label>
+                        <input type="password" id="loginPassword" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="submit-btn">
+                        <span>🚀</span>
+                        <span>Entrar</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Register Tab -->
+            <div class="tab-content" id="registerTab">
+                <form id="registerForm">
+                    <div class="profile-photo-upload">
+                        <div class="profile-photo-preview" id="registerPhotoPreview">
+                            👤
+                        </div>
+                        <input type="file" id="registerPhoto" accept="image/*" style="display: none;">
+                        <button type="button" class="upload-photo-btn" onclick="document.getElementById('registerPhoto').click();">
+                            📷 Escolher Foto de Perfil
+                        </button>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <span>👤</span>
+                            <span>Nome Completo</span>
+                        </label>
+                        <input type="text" id="registerFullName" placeholder="João da Silva" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <span>✨</span>
+                            <span>Apelido</span>
+                        </label>
+                        <input type="text" id="registerNickname" placeholder="João" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <span>📧</span>
+                            <span>E-mail</span>
+                        </label>
+                        <input type="email" id="registerEmail" placeholder="seu@email.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <span>🔑</span>
+                            <span>Senha</span>
+                        </label>
+                        <input type="password" id="registerPassword" placeholder="••••••••" minlength="6" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <span>🔑</span>
+                            <span>Confirmar Senha</span>
+                        </label>
+                        <input type="password" id="registerConfirmPassword" placeholder="••••••••" minlength="6" required>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        <span>✅</span>
+                        <span>Criar Conta</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeSettingsModal">&times;</span>
+            <h2>⚙️ Configurações</h2>
+
+            <div class="settings-section">
+                <h3>🎨 Cor do Tema</h3>
+                <div class="color-picker-grid">
+                    <div class="color-option active" data-color="blue" style="background: #0a84ff;" title="Azul (Padrão)"></div>
+                    <div class="color-option" data-color="green" style="background: #30d158;" title="Verde"></div>
+                    <div class="color-option" data-color="purple" style="background: #bf5af2;" title="Roxo"></div>
+                    <div class="color-option" data-color="pink" style="background: #ff375f;" title="Rosa"></div>
+                    <div class="color-option" data-color="orange" style="background: #ff9f0a;" title="Laranja"></div>
+                    <div class="color-option" data-color="teal" style="background: #64d2ff;" title="Ciano"></div>
+                    <div class="color-option" data-color="red" style="background: #ff453a;" title="Vermelho"></div>
+                    <div class="color-option rainbow-effect" data-color="rainbow" style="background: linear-gradient(135deg, #ff0080, #ff8c00, #40e0d0);" title="Arco-íris"></div>
                 </div>
-                <div class="form-group">
-                    <label>
-                        <span>🔑</span>
-                        <span>Senha</span>
-                    </label>
-                    <input type="password" id="loginPassword" placeholder="••••••••" required>
-                </div>
-                <button type="submit" class="submit-btn">
-                    <span>🚀</span>
-                    <span>Entrar no Sistema</span>
+            </div>
+
+            <div class="settings-section">
+                <h3>🔤 Fonte do Site</h3>
+                <select class="font-select" id="fontSelect">
+                    <option value="system">Sistema (SF Pro Display)</option>
+                    <option value="serif">Serif (Times New Roman)</option>
+                    <option value="mono">Mono (Courier New)</option>
+                    <option value="comic">Comic (Comic Sans MS)</option>
+                    <option value="arial">Arial</option>
+                    <option value="verdana">Verdana</option>
+                    <option value="georgia">Georgia</option>
+                </select>
+            </div>
+
+            <div class="settings-section">
+                <button class="submit-btn" id="resetSettings">
+                    <span>🔄</span>
+                    <span>Restaurar Padrões</span>
                 </button>
-                <p style="text-align: center; color: var(--text-tertiary); font-size: 14px; margin-top: 20px; line-height: 1.6;">
-                    🔒 <strong>Acesso Restrito:</strong> Apenas o email kartywillytdc@gmail.com tem permissão para modificar o conteúdo do site.
-                </p>
-            </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div class="modal" id="profileModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeProfileModal">&times;</span>
+            
+            <div class="profile-info">
+                <div class="profile-avatar-large" id="profileAvatarLarge">
+                    👤
+                </div>
+                <h3 class="profile-name" id="profileName">Nome do Usuário</h3>
+                <p class="profile-nickname" id="profileNickname">@apelido</p>
+                <p class="profile-email" id="profileEmail">email@exemplo.com</p>
+
+                <div class="profile-stats">
+                    <div class="profile-stat">
+                        <span class="profile-stat-number" id="profileRatingsCount">0</span>
+                        <span class="profile-stat-label">Avaliações</span>
+                    </div>
+                    <div class="profile-stat">
+                        <span class="profile-stat-number" id="profileJoinDate">2025</span>
+                        <span class="profile-stat-label">Membro desde</span>
+                    </div>
+                </div>
+
+                <button class="logout-btn" id="logoutBtn">
+                    <span>🚪</span>
+                    <span>Sair da Conta</span>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -1771,6 +2192,7 @@
 
         const ADMIN_EMAIL = "kartywillytdc@gmail.com";
         let currentUser = null;
+        let userProfilePhoto = null;
 
         // ========== 3D PLANET SETUP ==========
         const canvas = document.getElementById('planet3d');
@@ -1781,85 +2203,133 @@
         renderer.setSize(canvas.clientWidth, canvas.clientHeight);
         renderer.setPixelRatio(window.devicePixelRatio);
 
-        // Create Earth
+        // Create Earth with detailed texture
         const geometry = new THREE.SphereGeometry(2, 64, 64);
         
-        // Create earth texture (simple gradient simulation)
+        // Create realistic earth texture
         const textureCanvas = document.createElement('canvas');
         textureCanvas.width = 2048;
         textureCanvas.height = 1024;
         const ctx = textureCanvas.getContext('2d');
         
-        // Ocean gradient
+        // Ocean gradient (deep blue)
         const oceanGradient = ctx.createLinearGradient(0, 0, 0, textureCanvas.height);
-        oceanGradient.addColorStop(0, '#1e3a5f');
+        oceanGradient.addColorStop(0, '#1a4d6d');
+        oceanGradient.addColorStop(0.3, '#0a5f8f');
         oceanGradient.addColorStop(0.5, '#0a84ff');
-        oceanGradient.addColorStop(1, '#1e3a5f');
+        oceanGradient.addColorStop(0.7, '#0a5f8f');
+        oceanGradient.addColorStop(1, '#1a4d6d');
         ctx.fillStyle = oceanGradient;
         ctx.fillRect(0, 0, textureCanvas.width, textureCanvas.height);
         
-        // Add land masses (simplified continents)
+        // Add realistic continents
         ctx.fillStyle = '#2d5016';
+        
+        // Africa & Europe
         ctx.beginPath();
-        // Simplified continent shapes
-        ctx.arc(500, 400, 200, 0, Math.PI * 2);
-        ctx.arc(1200, 300, 250, 0, Math.PI * 2);
-        ctx.arc(1600, 600, 180, 0, Math.PI * 2);
-        ctx.arc(300, 700, 150, 0, Math.PI * 2);
+        ctx.ellipse(1100, 500, 200, 350, 0.3, 0, Math.PI * 2);
         ctx.fill();
+        
+        // Americas
+        ctx.beginPath();
+        ctx.ellipse(400, 400, 180, 400, -0.2, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // Asia
+        ctx.beginPath();
+        ctx.ellipse(1500, 400, 300, 250, 0.1, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // Australia
+        ctx.beginPath();
+        ctx.ellipse(1700, 700, 120, 100, 0, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // Add ice caps
+        ctx.fillStyle = '#ffffff';
+        ctx.globalAlpha = 0.9;
+        ctx.beginPath();
+        ctx.ellipse(1024, 50, 400, 80, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.ellipse(1024, 974, 450, 80, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1.0;
         
         const texture = new THREE.CanvasTexture(textureCanvas);
         const material = new THREE.MeshPhongMaterial({ 
             map: texture,
             bumpScale: 0.05,
             specular: new THREE.Color(0x333333),
-            shininess: 5
+            shininess: 10
         });
         
         const earth = new THREE.Mesh(geometry, material);
         scene.add(earth);
 
-        // Add atmosphere glow
-        const atmosphereGeometry = new THREE.SphereGeometry(2.1, 64, 64);
+        // Add realistic atmosphere glow
+        const atmosphereGeometry = new THREE.SphereGeometry(2.15, 64, 64);
         const atmosphereMaterial = new THREE.MeshPhongMaterial({
             color: 0x64d2ff,
             transparent: true,
-            opacity: 0.15,
+            opacity: 0.2,
             side: THREE.BackSide
         });
         const atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
         scene.add(atmosphere);
 
-        // Add clouds
-        const cloudGeometry = new THREE.SphereGeometry(2.05, 64, 64);
+        // Add detailed cloud layer
+        const cloudGeometry = new THREE.SphereGeometry(2.03, 64, 64);
+        const cloudCanvas = document.createElement('canvas');
+        cloudCanvas.width = 2048;
+        cloudCanvas.height = 1024;
+        const cloudCtx = cloudCanvas.getContext('2d');
+        cloudCtx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+        
+        // Create cloud patterns
+        for (let i = 0; i < 100; i++) {
+            const x = Math.random() * cloudCanvas.width;
+            const y = Math.random() * cloudCanvas.height;
+            const radius = Math.random() * 60 + 20;
+            cloudCtx.beginPath();
+            cloudCtx.arc(x, y, radius, 0, Math.PI * 2);
+            cloudCtx.fill();
+        }
+        
+        const cloudTexture = new THREE.CanvasTexture(cloudCanvas);
         const cloudMaterial = new THREE.MeshPhongMaterial({
-            color: 0xffffff,
+            map: cloudTexture,
             transparent: true,
-            opacity: 0.2
+            opacity: 0.4
         });
         const clouds = new THREE.Mesh(cloudGeometry, cloudMaterial);
         scene.add(clouds);
 
-        // Lighting
-        const ambientLight = new THREE.AmbientLight(0x404040, 2);
+        // Enhanced Lighting
+        const ambientLight = new THREE.AmbientLight(0x404040, 2.5);
         scene.add(ambientLight);
 
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
         directionalLight.position.set(5, 3, 5);
         scene.add(directionalLight);
 
-        const backLight = new THREE.DirectionalLight(0x0a84ff, 0.5);
+        const backLight = new THREE.DirectionalLight(0x0a84ff, 0.8);
         backLight.position.set(-5, -3, -5);
         scene.add(backLight);
 
+        // Add point light for sun effect
+        const sunLight = new THREE.PointLight(0xffffff, 1, 100);
+        sunLight.position.set(10, 5, 10);
+        scene.add(sunLight);
+
         camera.position.z = 5;
 
-        // Animation
+        // Animation with smooth rotation
         function animate() {
             requestAnimationFrame(animate);
-            earth.rotation.y += 0.001;
-            clouds.rotation.y += 0.0015;
-            atmosphere.rotation.y -= 0.0005;
+            earth.rotation.y += 0.002;
+            clouds.rotation.y += 0.0025;
+            atmosphere.rotation.y -= 0.001;
             renderer.render(scene, camera);
         }
         animate();
@@ -1875,9 +2345,14 @@
 
         // ========== DOM ELEMENTS ==========
         const loginBtn = document.getElementById('loginBtn');
-        const loginModal = document.getElementById('loginModal');
-        const closeModal = document.getElementById('closeModal');
-        const loginForm = document.getElementById('loginForm');
+        const authModal = document.getElementById('authModal');
+        const settingsModal = document.getElementById('settingsModal');
+        const profileModal = document.getElementById('profileModal');
+        const closeAuthModal = document.getElementById('closeAuthModal');
+        const closeSettingsModal = document.getElementById('closeSettingsModal');
+        const closeProfileModal = document.getElementById('closeProfileModal');
+        const settingsBtn = document.getElementById('settingsBtn');
+        const profileBtn = document.getElementById('profileBtn');
         const hamburger = document.getElementById('hamburger');
         const navMenu = document.getElementById('navMenu');
         const adminPanel = document.getElementById('adminPanel');
@@ -1909,78 +2384,206 @@
         // ========== MODAL CONTROLS ==========
         loginBtn.addEventListener('click', () => {
             if (currentUser) {
-                logout();
+                profileModal.style.display = 'block';
+                loadUserProfile();
             } else {
-                loginModal.style.display = 'block';
+                authModal.style.display = 'block';
             }
         });
 
-        closeModal.addEventListener('click', () => {
-            loginModal.style.display = 'none';
+        settingsBtn.addEventListener('click', () => {
+            settingsModal.style.display = 'block';
+        });
+
+        profileBtn.addEventListener('click', () => {
+            profileModal.style.display = 'block';
+            loadUserProfile();
+        });
+
+        closeAuthModal.addEventListener('click', () => {
+            authModal.style.display = 'none';
+        });
+
+        closeSettingsModal.addEventListener('click', () => {
+            settingsModal.style.display = 'none';
+        });
+
+        closeProfileModal.addEventListener('click', () => {
+            profileModal.style.display = 'none';
         });
 
         window.addEventListener('click', (e) => {
-            if (e.target === loginModal) {
-                loginModal.style.display = 'none';
+            if (e.target === authModal) authModal.style.display = 'none';
+            if (e.target === settingsModal) settingsModal.style.display = 'none';
+            if (e.target === profileModal) profileModal.style.display = 'none';
+        });
+
+        // ========== MODAL TABS ==========
+        const modalTabs = document.querySelectorAll('.modal-tab');
+        modalTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                modalTabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                
+                const tabName = this.dataset.tab;
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                document.getElementById(tabName + 'Tab').classList.add('active');
+            });
+        });
+
+        // ========== PHOTO PREVIEW ==========
+        document.getElementById('registerPhoto').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const preview = document.getElementById('registerPhotoPreview');
+                    preview.innerHTML = `<img src="${event.target.result}" alt="Preview">`;
+                    userProfilePhoto = file;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // ========== REGISTER ==========
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const fullName = document.getElementById('registerFullName').value;
+            const nickname = document.getElementById('registerNickname').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('registerConfirmPassword').value;
+
+            if (password !== confirmPassword) {
+                showAlert('⚠️ As senhas não coincidem!', 'error');
+                return;
+            }
+
+            if (password.length < 6) {
+                showAlert('⚠️ A senha deve ter pelo menos 6 caracteres!', 'error');
+                return;
+            }
+
+            try {
+                showAlert('⏳ Criando sua conta...', 'info');
+                
+                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                const user = userCredential.user;
+
+                let photoURL = '';
+                // Upload profile photo if provided
+                if (userProfilePhoto) {
+                    const photoRef = storage.ref(`profilePhotos/${user.uid}`);
+                    await photoRef.put(userProfilePhoto);
+                    photoURL = await photoRef.getDownloadURL();
+                }
+
+                // Save user profile to database
+                await database.ref('users/' + user.uid).set({
+                    fullName: fullName,
+                    nickname: nickname,
+                    email: email,
+                    photoURL: photoURL,
+                    joinDate: new Date().toISOString(),
+                    ratingsCount: 0
+                });
+
+                showAlert('✅ Conta criada com sucesso!', 'success');
+                authModal.style.display = 'none';
+                document.getElementById('registerForm').reset();
+                document.getElementById('registerPhotoPreview').innerHTML = '👤';
+                userProfilePhoto = null;
+                
+            } catch (error) {
+                showAlert('❌ Erro ao criar conta: ' + error.message, 'error');
             }
         });
 
         // ========== LOGIN ==========
-        loginForm.addEventListener('submit', async (e) => {
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
 
-            if (email !== ADMIN_EMAIL) {
-                showAlert('⚠️ Apenas o email autorizado pode fazer login.', 'error');
-                return;
-            }
-
             try {
+                showAlert('⏳ Entrando...', 'info');
                 const userCredential = await auth.signInWithEmailAndPassword(email, password);
                 currentUser = userCredential.user;
-                loginModal.style.display = 'none';
+                authModal.style.display = 'none';
                 showAlert('✅ Login realizado com sucesso!', 'success');
-                updateUIForAdmin();
-                loginBtn.innerHTML = '<span>🚪</span><span>Sair</span>';
+                document.getElementById('loginForm').reset();
             } catch (error) {
                 showAlert('❌ Erro ao fazer login: ' + error.message, 'error');
             }
         });
 
         // ========== LOGOUT ==========
-        function logout() {
-            auth.signOut().then(() => {
-                currentUser = null;
-                adminPanel.style.display = 'none';
-                galleryAdminPanel.style.display = 'none';
-                loginBtn.innerHTML = '<span>🔐</span><span>Entrar</span>';
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            try {
+                await auth.signOut();
+                profileModal.style.display = 'none';
                 showAlert('👋 Logout realizado com sucesso!', 'success');
-            });
-        }
-
-        // ========== UPDATE UI FOR ADMIN ==========
-        function updateUIForAdmin() {
-            if (currentUser && currentUser.email === ADMIN_EMAIL) {
-                adminPanel.style.display = 'block';
-                galleryAdminPanel.style.display = 'block';
-            }
-        }
-
-        // ========== AUTH STATE OBSERVER ==========
-        auth.onAuthStateChanged((user) => {
-            if (user && user.email === ADMIN_EMAIL) {
-                currentUser = user;
-                updateUIForAdmin();
-                loginBtn.innerHTML = '<span>🚪</span><span>Sair</span>';
-            } else {
-                currentUser = null;
-                adminPanel.style.display = 'none';
-                galleryAdminPanel.style.display = 'none';
-                loginBtn.innerHTML = '<span>🔐</span><span>Entrar</span>';
+            } catch (error) {
+                showAlert('❌ Erro ao fazer logout: ' + error.message, 'error');
             }
         });
+
+        // ========== AUTH STATE OBSERVER ==========
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                currentUser = user;
+                
+                // Update UI for logged in user
+                const userSnapshot = await database.ref('users/' + user.uid).once('value');
+                const userData = userSnapshot.val();
+                
+                if (userData) {
+                    loginBtn.innerHTML = `<span>👤</span><span>${userData.nickname}</span>`;
+                    profileBtn.classList.remove('hidden');
+                    
+                    // Show admin panels if admin
+                    if (user.email === ADMIN_EMAIL) {
+                        adminPanel.classList.remove('hidden');
+                        galleryAdminPanel.classList.remove('hidden');
+                    }
+                }
+            } else {
+                currentUser = null;
+                loginBtn.innerHTML = '<span>🔐</span><span>Entrar</span>';
+                profileBtn.classList.add('hidden');
+                adminPanel.classList.add('hidden');
+                galleryAdminPanel.classList.add('hidden');
+            }
+        });
+
+        // ========== LOAD USER PROFILE ==========
+        async function loadUserProfile() {
+            if (!currentUser) return;
+            
+            const userSnapshot = await database.ref('users/' + currentUser.uid).once('value');
+            const userData = userSnapshot.val();
+            
+            if (userData) {
+                document.getElementById('profileName').textContent = userData.fullName;
+                document.getElementById('profileNickname').textContent = '@' + userData.nickname;
+                document.getElementById('profileEmail').textContent = userData.email;
+                document.getElementById('profileRatingsCount').textContent = userData.ratingsCount || 0;
+                
+                const joinYear = new Date(userData.joinDate).getFullYear();
+                document.getElementById('profileJoinDate').textContent = joinYear;
+                
+                const avatarLarge = document.getElementById('profileAvatarLarge');
+                if (userData.photoURL) {
+                    avatarLarge.innerHTML = `<img src="${userData.photoURL}" alt="Avatar">`;
+                } else {
+                    avatarLarge.innerHTML = '👤';
+                }
+            }
+        }
 
         // ========== VIDEO FORM ==========
         document.getElementById('videoForm').addEventListener('submit', async (e) => {
@@ -2129,7 +2732,7 @@
                     const item = data[key];
                     const galleryItem = document.createElement('div');
                     galleryItem.className = 'gallery-item';
-                    galleryItem.innerHTML = `<img src="${item.url}" alt="${item.title}" loading="lazy">`;
+                    galleryItem.innerHTML = `<img src="${item.url}" alt="${item.title}" loading="lazy" title="${item.description}">`;
                     galleryGrid.appendChild(galleryItem);
                 });
             });
@@ -2181,7 +2784,11 @@
         document.getElementById('ratingForm').addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const name = document.getElementById('ratingName').value;
+            if (!currentUser) {
+                showAlert('⚠️ Você precisa estar logado para avaliar!', 'error');
+                return;
+            }
+
             const comment = document.getElementById('ratingComment').value;
             const rating = parseInt(document.getElementById('ratingValue').value);
 
@@ -2191,13 +2798,23 @@
             }
 
             try {
+                const userSnapshot = await database.ref('users/' + currentUser.uid).once('value');
+                const userData = userSnapshot.val();
+
                 const newRatingRef = database.ref('ratings').push();
                 await newRatingRef.set({
-                    name: name,
+                    userId: currentUser.uid,
+                    userName: userData.fullName,
+                    userNickname: userData.nickname,
+                    userEmail: currentUser.email,
+                    userPhoto: userData.photoURL || '',
                     comment: comment,
                     rating: rating,
                     date: new Date().toISOString()
                 });
+
+                // Update user's rating count
+                await database.ref('users/' + currentUser.uid + '/ratingsCount').set((userData.ratingsCount || 0) + 1);
 
                 showAlert('✅ Avaliação enviada com sucesso!', 'success');
                 document.getElementById('ratingForm').reset();
@@ -2235,12 +2852,16 @@
                     const starsHTML = '⭐'.repeat(rating.rating) + '☆'.repeat(5 - rating.rating);
                     const date = new Date(rating.date).toLocaleDateString('pt-BR');
                     
+                    const avatarHTML = rating.userPhoto ? 
+                        `<img src="${rating.userPhoto}" alt="${rating.userName}">` : 
+                        '👤';
+                    
                     ratingItem.innerHTML = `
                         <div class="rating-header">
                             <div class="rating-user">
-                                <div class="user-avatar">👤</div>
+                                <div class="user-avatar">${avatarHTML}</div>
                                 <div>
-                                    <h4 style="font-size: 18px; margin-bottom: 4px;">${rating.name}</h4>
+                                    <h4 style="font-size: 18px; margin-bottom: 4px;">${rating.userName} <span style="color: var(--text-tertiary); font-size: 14px;">@${rating.userNickname}</span></h4>
                                     <p style="color: var(--text-tertiary); font-size: 14px;">${date}</p>
                                 </div>
                             </div>
@@ -2251,6 +2872,130 @@
                     ratingsList.appendChild(ratingItem);
                 });
             });
+        }
+
+        // ========== SETTINGS - COLOR THEMES ==========
+        const colorOptions = document.querySelectorAll('.color-option');
+        colorOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                colorOptions.forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                
+                const color = this.dataset.color;
+                applyColorTheme(color);
+                
+                // Save preference
+                if (currentUser) {
+                    database.ref('users/' + currentUser.uid + '/preferences/theme').set(color);
+                } else {
+                    localStorage.setItem('themeColor', color);
+                }
+            });
+        });
+
+        function applyColorTheme(color) {
+            const root = document.documentElement;
+            const colors = {
+                blue: '#0a84ff',
+                green: '#30d158',
+                purple: '#bf5af2',
+                pink: '#ff375f',
+                orange: '#ff9f0a',
+                teal: '#64d2ff',
+                red: '#ff453a'
+            };
+
+            if (color === 'rainbow') {
+                document.body.classList.add('rainbow-effect');
+                document.querySelector('.logo-icon').classList.add('rainbow-effect');
+            } else {
+                document.body.classList.remove('rainbow-effect');
+                document.querySelector('.logo-icon').classList.remove('rainbow-effect');
+                
+                if (colors[color]) {
+                    root.style.setProperty('--accent-blue', colors[color]);
+                }
+            }
+        }
+
+        // ========== SETTINGS - FONTS ==========
+        const fontSelect = document.getElementById('fontSelect');
+        fontSelect.addEventListener('change', function() {
+            const font = this.value;
+            applyFont(font);
+            
+            // Save preference
+            if (currentUser) {
+                database.ref('users/' + currentUser.uid + '/preferences/font').set(font);
+            } else {
+                localStorage.setItem('font', font);
+            }
+        });
+
+        function applyFont(font) {
+            const fonts = {
+                system: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif',
+                serif: '"Times New Roman", Times, serif',
+                mono: '"Courier New", Courier, monospace',
+                comic: '"Comic Sans MS", cursive',
+                arial: 'Arial, sans-serif',
+                verdana: 'Verdana, sans-serif',
+                georgia: 'Georgia, serif'
+            };
+
+            if (fonts[font]) {
+                document.documentElement.style.setProperty('--user-font', fonts[font]);
+            }
+        }
+
+        // ========== RESET SETTINGS ==========
+        document.getElementById('resetSettings').addEventListener('click', () => {
+            applyColorTheme('blue');
+            applyFont('system');
+            fontSelect.value = 'system';
+            
+            colorOptions.forEach(opt => opt.classList.remove('active'));
+            document.querySelector('[data-color="blue"]').classList.add('active');
+            
+            if (currentUser) {
+                database.ref('users/' + currentUser.uid + '/preferences').remove();
+            } else {
+                localStorage.removeItem('themeColor');
+                localStorage.removeItem('font');
+            }
+            
+            showAlert('✅ Configurações restauradas!', 'success');
+        });
+
+        // ========== LOAD USER PREFERENCES ==========
+        async function loadUserPreferences() {
+            if (currentUser) {
+                const prefsSnapshot = await database.ref('users/' + currentUser.uid + '/preferences').once('value');
+                const prefs = prefsSnapshot.val();
+                
+                if (prefs) {
+                    if (prefs.theme) {
+                        applyColorTheme(prefs.theme);
+                        document.querySelector(`[data-color="${prefs.theme}"]`)?.classList.add('active');
+                    }
+                    if (prefs.font) {
+                        applyFont(prefs.font);
+                        fontSelect.value = prefs.font;
+                    }
+                }
+            } else {
+                const savedColor = localStorage.getItem('themeColor');
+                const savedFont = localStorage.getItem('font');
+                
+                if (savedColor) {
+                    applyColorTheme(savedColor);
+                    document.querySelector(`[data-color="${savedColor}"]`)?.classList.add('active');
+                }
+                if (savedFont) {
+                    applyFont(savedFont);
+                    fontSelect.value = savedFont;
+                }
+            }
         }
 
         // ========== SHOW ALERT ==========
@@ -2296,6 +3041,7 @@
             loadJournalVideo();
             loadGallery();
             loadRatings();
+            loadUserPreferences();
         });
 
         // ========== KEYBOARD SHORTCUTS ==========
@@ -2303,13 +3049,15 @@
             if (e.ctrlKey && e.key === 'k') {
                 e.preventDefault();
                 if (!currentUser) {
-                    loginModal.style.display = 'block';
+                    authModal.style.display = 'block';
                     document.getElementById('loginEmail').focus();
                 }
             }
             
             if (e.key === 'Escape') {
-                loginModal.style.display = 'none';
+                authModal.style.display = 'none';
+                settingsModal.style.display = 'none';
+                profileModal.style.display = 'none';
             }
         });
 
@@ -2319,6 +3067,7 @@
         console.log('%cColégio Estadual São Francisco de Assis', 'font-size: 14px; color: #98989d;');
         console.log('%c⚠️ AVISO: Este console é para desenvolvedores!', 'font-size: 12px; color: #ff453a; font-weight: bold;');
         console.log('%c💡 Dica: Pressione Ctrl+K para login rápido', 'font-size: 12px; color: #0a84ff;');
+        console.log('%c✨ Recursos: Login/Registro | Avaliações | Galeria | Vídeos | Configurações', 'font-size: 12px; color: #bf5af2;');
     </script>
 </body>
 </html>
