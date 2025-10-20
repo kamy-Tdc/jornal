@@ -164,6 +164,7 @@
         .settings-btn:hover, .profile-btn:hover {
             background: var(--bg-elevated);
             border-color: var(--accent-blue);
+            transform: scale(1.1);
         }
 
         .login-btn {
@@ -295,13 +296,16 @@
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        #planet3d {
-            width: 100%;
-            height: 100%;
             border-radius: 24px;
             background: linear-gradient(135deg, rgba(10, 132, 255, 0.1), rgba(48, 209, 88, 0.1));
+            overflow: hidden;
+        }
+
+        .planet-3d-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 24px;
         }
 
         .planet-info {
@@ -339,6 +343,12 @@
             border-radius: 16px;
             border: 1px solid var(--border-color);
             text-align: center;
+            transition: var(--transition-smooth);
+        }
+
+        .planet-stat:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
         }
 
         .planet-stat-icon {
@@ -386,6 +396,12 @@
             display: flex;
             align-items: center;
             gap: 6px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
         .ticker-content {
@@ -467,6 +483,12 @@
             margin-bottom: 16px;
             display: block;
             filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
 
         .disaster-card h3 {
@@ -560,6 +582,7 @@
             font-size: 96px;
             margin-bottom: 24px;
             opacity: 0.4;
+            animation: float 3s ease-in-out infinite;
         }
 
         .video-wrapper iframe {
@@ -631,6 +654,12 @@
             padding: 30px;
             border-radius: 20px;
             border: 1px solid var(--border-color);
+            transition: var(--transition-smooth);
+        }
+
+        .rating-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
         }
 
         .rating-header {
@@ -655,7 +684,7 @@
             align-items: center;
             justify-content: center;
             font-size: 20px;
-            object-fit: cover;
+            overflow: hidden;
         }
 
         .user-avatar img {
@@ -700,6 +729,7 @@
             justify-content: center;
             font-size: 64px;
             box-shadow: 0 10px 40px rgba(10, 132, 255, 0.4);
+            animation: float 3s ease-in-out infinite;
         }
 
         .creator-name {
@@ -732,6 +762,12 @@
             display: flex;
             align-items: center;
             gap: 16px;
+            transition: var(--transition-smooth);
+        }
+
+        .credit-item:hover {
+            transform: translateX(10px);
+            border-color: var(--accent-blue);
         }
 
         .credit-icon {
@@ -1495,7 +1531,9 @@
 
             <div class="planet-container">
                 <div class="planet-3d-wrapper">
-                    <canvas id="planet3d"></canvas>
+                    <div class="sketchfab-embed-wrapper">
+                        <iframe title="Earth" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/41fc80d85dfd480281f21b74b2de2faa/embed"></iframe>
+                    </div>
                 </div>
 
                 <div class="planet-info">
@@ -2167,9 +2205,6 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
-    
-    <!-- Three.js for 3D Planet -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <script>
         // ========== FIREBASE CONFIGURATION ==========
@@ -2193,155 +2228,6 @@
         const ADMIN_EMAIL = "kartywillytdc@gmail.com";
         let currentUser = null;
         let userProfilePhoto = null;
-
-        // ========== 3D PLANET SETUP ==========
-        const canvas = document.getElementById('planet3d');
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
-        
-        renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
-
-        // Create Earth with detailed texture
-        const geometry = new THREE.SphereGeometry(2, 64, 64);
-        
-        // Create realistic earth texture
-        const textureCanvas = document.createElement('canvas');
-        textureCanvas.width = 2048;
-        textureCanvas.height = 1024;
-        const ctx = textureCanvas.getContext('2d');
-        
-        // Ocean gradient (deep blue)
-        const oceanGradient = ctx.createLinearGradient(0, 0, 0, textureCanvas.height);
-        oceanGradient.addColorStop(0, '#1a4d6d');
-        oceanGradient.addColorStop(0.3, '#0a5f8f');
-        oceanGradient.addColorStop(0.5, '#0a84ff');
-        oceanGradient.addColorStop(0.7, '#0a5f8f');
-        oceanGradient.addColorStop(1, '#1a4d6d');
-        ctx.fillStyle = oceanGradient;
-        ctx.fillRect(0, 0, textureCanvas.width, textureCanvas.height);
-        
-        // Add realistic continents
-        ctx.fillStyle = '#2d5016';
-        
-        // Africa & Europe
-        ctx.beginPath();
-        ctx.ellipse(1100, 500, 200, 350, 0.3, 0, Math.PI * 2);
-        ctx.fill();
-        
-        // Americas
-        ctx.beginPath();
-        ctx.ellipse(400, 400, 180, 400, -0.2, 0, Math.PI * 2);
-        ctx.fill();
-        
-        // Asia
-        ctx.beginPath();
-        ctx.ellipse(1500, 400, 300, 250, 0.1, 0, Math.PI * 2);
-        ctx.fill();
-        
-        // Australia
-        ctx.beginPath();
-        ctx.ellipse(1700, 700, 120, 100, 0, 0, Math.PI * 2);
-        ctx.fill();
-        
-        // Add ice caps
-        ctx.fillStyle = '#ffffff';
-        ctx.globalAlpha = 0.9;
-        ctx.beginPath();
-        ctx.ellipse(1024, 50, 400, 80, 0, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.beginPath();
-        ctx.ellipse(1024, 974, 450, 80, 0, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.globalAlpha = 1.0;
-        
-        const texture = new THREE.CanvasTexture(textureCanvas);
-        const material = new THREE.MeshPhongMaterial({ 
-            map: texture,
-            bumpScale: 0.05,
-            specular: new THREE.Color(0x333333),
-            shininess: 10
-        });
-        
-        const earth = new THREE.Mesh(geometry, material);
-        scene.add(earth);
-
-        // Add realistic atmosphere glow
-        const atmosphereGeometry = new THREE.SphereGeometry(2.15, 64, 64);
-        const atmosphereMaterial = new THREE.MeshPhongMaterial({
-            color: 0x64d2ff,
-            transparent: true,
-            opacity: 0.2,
-            side: THREE.BackSide
-        });
-        const atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
-        scene.add(atmosphere);
-
-        // Add detailed cloud layer
-        const cloudGeometry = new THREE.SphereGeometry(2.03, 64, 64);
-        const cloudCanvas = document.createElement('canvas');
-        cloudCanvas.width = 2048;
-        cloudCanvas.height = 1024;
-        const cloudCtx = cloudCanvas.getContext('2d');
-        cloudCtx.fillStyle = 'rgba(255, 255, 255, 0.3)';
-        
-        // Create cloud patterns
-        for (let i = 0; i < 100; i++) {
-            const x = Math.random() * cloudCanvas.width;
-            const y = Math.random() * cloudCanvas.height;
-            const radius = Math.random() * 60 + 20;
-            cloudCtx.beginPath();
-            cloudCtx.arc(x, y, radius, 0, Math.PI * 2);
-            cloudCtx.fill();
-        }
-        
-        const cloudTexture = new THREE.CanvasTexture(cloudCanvas);
-        const cloudMaterial = new THREE.MeshPhongMaterial({
-            map: cloudTexture,
-            transparent: true,
-            opacity: 0.4
-        });
-        const clouds = new THREE.Mesh(cloudGeometry, cloudMaterial);
-        scene.add(clouds);
-
-        // Enhanced Lighting
-        const ambientLight = new THREE.AmbientLight(0x404040, 2.5);
-        scene.add(ambientLight);
-
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
-        directionalLight.position.set(5, 3, 5);
-        scene.add(directionalLight);
-
-        const backLight = new THREE.DirectionalLight(0x0a84ff, 0.8);
-        backLight.position.set(-5, -3, -5);
-        scene.add(backLight);
-
-        // Add point light for sun effect
-        const sunLight = new THREE.PointLight(0xffffff, 1, 100);
-        sunLight.position.set(10, 5, 10);
-        scene.add(sunLight);
-
-        camera.position.z = 5;
-
-        // Animation with smooth rotation
-        function animate() {
-            requestAnimationFrame(animate);
-            earth.rotation.y += 0.002;
-            clouds.rotation.y += 0.0025;
-            atmosphere.rotation.y -= 0.001;
-            renderer.render(scene, camera);
-        }
-        animate();
-
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            if (canvas.clientWidth > 0) {
-                camera.aspect = canvas.clientWidth / canvas.clientHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-            }
-        });
 
         // ========== DOM ELEMENTS ==========
         const loginBtn = document.getElementById('loginBtn');
@@ -2786,6 +2672,7 @@
 
             if (!currentUser) {
                 showAlert('⚠️ Você precisa estar logado para avaliar!', 'error');
+                authModal.style.display = 'block';
                 return;
             }
 
@@ -2884,7 +2771,7 @@
                 const color = this.dataset.color;
                 applyColorTheme(color);
                 
-                // Save preference
+                // Save preference to Firebase if logged in, else localStorage
                 if (currentUser) {
                     database.ref('users/' + currentUser.uid + '/preferences/theme').set(color);
                 } else {
@@ -2976,7 +2863,11 @@
                 if (prefs) {
                     if (prefs.theme) {
                         applyColorTheme(prefs.theme);
-                        document.querySelector(`[data-color="${prefs.theme}"]`)?.classList.add('active');
+                        const colorOption = document.querySelector(`[data-color="${prefs.theme}"]`);
+                        if (colorOption) {
+                            colorOptions.forEach(opt => opt.classList.remove('active'));
+                            colorOption.classList.add('active');
+                        }
                     }
                     if (prefs.font) {
                         applyFont(prefs.font);
@@ -2989,7 +2880,11 @@
                 
                 if (savedColor) {
                     applyColorTheme(savedColor);
-                    document.querySelector(`[data-color="${savedColor}"]`)?.classList.add('active');
+                    const colorOption = document.querySelector(`[data-color="${savedColor}"]`);
+                    if (colorOption) {
+                        colorOptions.forEach(opt => opt.classList.remove('active'));
+                        colorOption.classList.add('active');
+                    }
                 }
                 if (savedFont) {
                     applyFont(savedFont);
